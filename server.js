@@ -12,7 +12,10 @@ var configDB = require('./config/database.js');
 mongoose.connect(configDB.url); // connect to our database
 
 // set up our express application
-app.use('/', bar);
+
+require('./app/routes.js')(app); // use "/" from own /app/routes.js
+app.use(bar);				 // get all other user related routes
+
 app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
 
 app.set('view engine', 'ejs'); // set up ejs for templating
