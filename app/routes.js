@@ -1,7 +1,7 @@
 console.log("	APP/ROUTES.JS")
 
 // app/routes.js
-module.exports = function(app, passport) {
+module.exports = function(app) {
 
     // =====================================
     // HOME PAGE (with login links) ========
