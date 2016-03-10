@@ -5,13 +5,31 @@
     <title>Home</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="style-0.css"> <!-- load fontawesome -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 </head>
 <body>
 <%- include ../node_modules/basic-login-bar/views/partials/header.ejs %>
 <div class="container">
-
-
-
+    <% if (!user) { %>
+        <div class="alert alert-danger">not logged in </div>
+		<div id="intro" class="vert-centered">
+			<h1>Welcome to StockCandler!</h1>
+			<p>								<a href="/login" class="btn btn-default">Login</a> or 
+								<a href="/signup" class="btn btn-default">Signup</a> to start Candling!</p>
+		</div>
+    <% } else {%>
+        <div class="alert alert-danger">logged in </div>
+	<div id="stockfinder" data-ng-app="Candler" data-ng-controller="MainCtrl as main">
+		<div>
+			<form data-ng-submit="searchTicker($scope.input.ticker)">
+				<input type="text" class="form-control" data-ng-model="input.ticker" placeholder="Enter a ticker symbol here">
+			</form>
+		</div>
+		<div id="stockinfo">Blah,<p>play</p></div>
+	</div>
+    <% } %>
 </div>
 </body>
 </html>
