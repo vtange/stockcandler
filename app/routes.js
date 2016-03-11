@@ -53,7 +53,12 @@ module.exports = function(app) {
 			deferred.resolve(result.body);
 		})
 		deferred.promise.then(function (value) {
-			console.log(value);
+			var temp = value.split(",");
+			res.send(JSON.stringify({
+				name: temp[0],
+				ask: temp[1],
+				bid: temp[2]
+			}));
 		});
 		
 
