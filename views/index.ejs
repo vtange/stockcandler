@@ -23,7 +23,7 @@
         <div class="alert alert-danger">logged in </div>
 	<div id="stockfinder" data-ng-app="Candler" data-ng-controller="MainCtrl as main">
 		<div>
-			<form data-ng-submit="searchTicker($scope.input.ticker)">
+			<form data-ng-submit="searchTicker(input.ticker)">
 				<input type="text" class="form-control" data-ng-model="input.ticker" placeholder="Enter a ticker symbol here">
 			</form>
 		</div>

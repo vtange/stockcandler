@@ -11,4 +11,14 @@ module.exports = function(app) {
             user : req.user // get the user out of session and pass to template
         }); // load the index.ejs file
     });
+	
+    // =====================================
+    // SEARCH STOCKS				========
+    // =====================================
+    app.post('/search', function(req, res) {
+		var ticker = req.body.ticker;
+		
+		
+        res.send(200);
+    });
 };
