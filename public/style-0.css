@@ -16,14 +16,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.vert-centered-txt{
-	line-height: 40px;
-}
 /* BASICS ^ */
-ul{
-  margin: 0;
-	padding: 0;
-}
 /* RESET */
 
 /* CUSTOM */
