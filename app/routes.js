@@ -42,12 +42,13 @@ module.exports = function(app) {
 			l1: Last Trade (Price Only)
 			k3: Last Trade Size
 			v: Volume
+			a2: Average Volume
 			w1: Day’s Value Change
 			w4: Day’s Value Change (Realtime)
 			m: Day’s Range
 			m2: Day’s Range (Realtime)
 		*/
-		var url = "http://finance.yahoo.com/d/quotes.csv?s="+req.body.ticker+"&f=nab"
+		var url = "http://finance.yahoo.com/d/quotes.csv?s="+req.body.ticker+"&f=np2omava2"
 		var deferred = Q.defer();
 		request.get(url, function (error, result) {
 			deferred.resolve(result.body);
@@ -56,8 +57,12 @@ module.exports = function(app) {
 			var temp = value.split(",");
 			res.send(JSON.stringify({
 				name: temp[0],
-				ask: temp[1],
-				bid: temp[2]
+				percent: temp[1],
+				open: temp[2],
+				range: temp[3],
+				ask: temp[4],
+				volume: temp[5],
+				avgvolume: temp[6]
 			}));
 		});
 		
