@@ -11,7 +11,8 @@ module.exports = function(app) {
     // =====================================
     app.get('/', function(req, res) {
         res.render('index.ejs', {
-            user : req.user // get the user out of session and pass to template
+            user : req.user, // get the user out of session and pass to template
+			packagedUser : JSON.stringify([req.user])
         }); // load the index.ejs file
     });
 	
@@ -57,6 +58,7 @@ module.exports = function(app) {
 			var temp = value.split(",");
 			res.send(JSON.stringify({
 				name: temp[0],
+				ticker: req.body.ticker.toUpperCase(),
 				percent: temp[1],
 				open: temp[2],
 				range: temp[3],

@@ -58,7 +58,7 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	//used to transfer server data to client
 	$scope.init = function(package) {
 		$scope.activeUser = package[0];
-		$scope.myStocks = package[1][0];
+		
 	};
 
 
