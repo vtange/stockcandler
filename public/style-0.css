@@ -23,12 +23,12 @@ body {
 #intro{
 	text-align: center;
 }
-#stockfinder{
+#stock-finder{
 	position: relative;
 	display:flex;
 	flex-direction: row;
 }
-#stockfinder div{
+#stock-finder div{
 	position: relative;
 	width:100%;
 }
@@ -38,4 +38,20 @@ body {
 	display:inline-block;
 	width:80%;
 	border-radius: 20px;
+}
+#stock-info{
+	transition:all 1s ease;
+	opacity: 0;
+	height:0px;
+	
+	background-color:aliceblue;
+	border-radius:10px;
+	padding: 10px;
+}
+#stock-info > div{
+	display: flex;
+	flex-direction: row;
+}
+#stock-name{
+	font-size: 1.5em;
 }

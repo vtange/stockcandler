@@ -27,16 +27,24 @@
 	<div class="alert alert-danger">logged in</div>
 	
 	<div data-ng-app="Candler" data-ng-controller="MainCtrl as main">
-		<div id="stockfinder">
+		<div id="stock-finder">
 			<div>
 				<form data-ng-submit="searchTicker(input.ticker)">
 					<input type="text" class="form-control" data-ng-model="input.ticker" placeholder="Enter a ticker symbol here">
 				</form>
 			</div>
-			<div id="stockinfo">
-			<h2>{{found.name}}</h2>
-			<h2>{{found.ask}}</h2>
-			<h2>{{found.bid}}</h2>
+			<div id="stock-info" data-ng-style="stockPopup()">
+				<p id="stock-name">{{found.name}} {{found.percent}}</p>
+				<div>
+					<div id="stock-data">
+						<p><b>Open Price:</b> {{found.open}}</p>
+						<p><b>Today's Range:</b> {{found.range}}</p>
+						<p><b>Current Ask:</b> {{found.ask}}</p>
+						<p><b>Today's Volume:</b> {{found.volume}} shares</p>
+						<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>
+					</div>
+					<div id="stock-chart">Chart goes here</div>
+				</div>
 			</div>
 			<hr>
 		</div>
@@ -44,8 +52,10 @@
 		<div id="user-candle-list">
 		<h1>Your Candles</h1>
 		
-		
-		
+		next steps:
+			1. make nicer display for stock info
+			2. make add stock to list button
+			
 		
 		</div>
 	</div>
