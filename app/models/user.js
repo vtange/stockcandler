@@ -32,7 +32,9 @@ var userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
+    },
+
+	stocks			 :[{ type: mongoose.Schema.Types.ObjectId, ref: 'Stock' }]
 
 });
 
