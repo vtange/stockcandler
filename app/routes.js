@@ -56,6 +56,9 @@ module.exports = function(app) {
 		})
 		deferred.promise.then(function (value) {
 			var temp = value.split(",");
+			//check and add a new ticker to MongoDB if no ticker yet.
+				//add the ticker to user's ticker list
+			
 			res.send(JSON.stringify({
 				name: temp[0],
 				ticker: req.body.ticker.toUpperCase(),

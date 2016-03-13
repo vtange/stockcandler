@@ -61,7 +61,11 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		
 	};
 
-
+	$scope.userAddStock = function(){
+		//user == activeUser
+		//ticker = $scope.found.ticker
+		// send a POST request that performs mongoDB ops
+	}
 	
 	
 }]);//end of controller
