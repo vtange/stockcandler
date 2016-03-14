@@ -57,24 +57,25 @@ module.exports = function(app) {
 
 		//perform HTTP action
 		function searchByTicker(SYMBOL){
-			var url = "http://finance.yahoo.com/d/quotes.csv?s="+SYMBOL+"&f=np2omava2"
+			var url = "http://finance.yahoo.com/d/quotes.csv?s="+SYMBOL+"&f=p2omava2n"
 			var deferred = Q.defer();
 			request.get(url, function (error, result) {
 				deferred.resolve(result.body);
 			})
 			deferred.promise.then(function (value) {
+
 				var temp = value.split(",");
 
 				// send the info
 					res.send(JSON.stringify({
-						name: temp[0],
 						ticker: SYMBOL,
-						percent: temp[1],
-						open: temp[2],
-						range: temp[3],
-						ask: temp[4],
-						volume: temp[5],
-						avgvolume: temp[6]
+						percent: temp[0],
+						open: temp[1],
+						range: temp[2],
+						ask: temp[3],
+						volume: temp[4],
+						avgvolume: temp[5],
+						name: temp[6],
 					}));
 			});
 		};
