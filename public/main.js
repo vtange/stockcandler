@@ -58,23 +58,28 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	//used to transfer server data to client
 	$scope.init = function(package) {
 		$scope.activeUser = package[0];
-		console.log(package);
-		$scope.activeUser.detailedStocks = package[1];
+		$scope.activeUser.detailedStocks = [];
+		if($scope.activeUser){
+			$scope.activeUser.stocks.forEach(function(stockObj){
+				$http.post($window.location.href+"search",stockObj).success(function(data){
+					$scope.activeUser.detailedStocks.push(processData(data));
+				});
+			})
+		}
 	};
 
 	//add stock to user's list
 	$scope.userAddStock = function(){
-		var info = {user:$scope.activeUser,ticker:$scope.found.ticker}
+		var info = {user:$scope.activeUser,ticker:$scope.found.ticker};
 		$http.post($window.location.href+"addstock",info).success(function(data){
-			$scope.activeUser.detailedStocks.push(data);
+			$scope.activeUser.stocks.push(data);
+			$scope.activeUser.detailedStocks.push($scope.found);
 		});
 	}
 	
 	//greys out add stock button
 	$scope.userHasStock = function(){
-		if($scope.found)
-			return $scope.activeUser.stocks.indexOf($scope.found._id);
-		else
+
 			return false;
 	}
 

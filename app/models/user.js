@@ -4,6 +4,9 @@ var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 var gravatar = require('gravatar');
 
+// stocks
+var stockSchema = mongoose.Schema({	ticker: String },{ _id:false });
+
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
@@ -34,7 +37,7 @@ var userSchema = mongoose.Schema({
         name         : String
     },
 
-	stocks			 :[{ type: mongoose.Schema.Types.ObjectId, ref: 'Stock' }]
+	stocks			 :[stockSchema]
 
 });
 

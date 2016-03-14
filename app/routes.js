@@ -2,7 +2,6 @@ console.log("	APP/ROUTES.JS")
 
 //for mongoDB interaction routes
 var User = require('./models/user');
-var Stock = require('./models/stock');
 
 //for doing HTTP requests
 var Q = require('q');
@@ -15,42 +14,10 @@ module.exports = function(app) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-		
-		//if logged in
-		if(req.user){
-			
-			//AND user has stocks. (Cannot jump straight to req.user.stocks b/c if user doesn't exist .stocks will return error)
-			if(req.user.stocks){
-				var stockDetails = [];
-				var stocksLeft = req.user.stocks.length;
-				req.user.stocks.forEach(function(stock_id){
-					Stock.findOne({_id:stock_id}, function(err, stock){
-						if(stock){
-							stockDetails.push(stock);
-							stocksLeft -= 1;
-						}
-					})
-				});
-				if(stocksLeft===0){
-					res.render('index.ejs', {
-						user : req.user, // get the user out of session and pass to template
-						packagedUser : JSON.stringify([req.user,stockDetails])
-					}); // load the index.ejs file
-				}
-			}
-			else{
-				res.render('index.ejs', {
-					user : req.user, // get the user out of session and pass to template
-					packagedUser : JSON.stringify([req.user])
-				}); // load the index.ejs file
-			}
-		}
-		else{
-			res.render('index.ejs', {
-				user : req.user, // get the user out of session and pass to template
-				packagedUser : JSON.stringify([req.user])
-			}); // load the index.ejs file
-		}
+		res.render('index.ejs', {
+			user : req.user, // get the user out of session and pass to template
+			packagedUser : JSON.stringify([req.user])
+		}); // load the index.ejs file
     });
 	
     // =====================================
@@ -98,13 +65,8 @@ module.exports = function(app) {
 			deferred.promise.then(function (value) {
 				var temp = value.split(",");
 
-				//check stocks for and _id match. This is to help client's userHasStocks fn.
-				Stock.findOne({ticker:SYMBOL}, function(err, stock){
-					if(stock){
-						var _id = stock._id;
-					}
+				// send the info
 					res.send(JSON.stringify({
-						_id: _id,
 						name: temp[0],
 						ticker: SYMBOL,
 						percent: temp[1],
@@ -114,7 +76,6 @@ module.exports = function(app) {
 						volume: temp[5],
 						avgvolume: temp[6]
 					}));
-				});
 			});
 		};
 		searchByTicker(ticker);
@@ -126,44 +87,19 @@ module.exports = function(app) {
     app.post('/addstock', function(req, res) {
 			if(req.user){
 				var user = req.user;
-				Stock.findOne({id:req.body.ticker}, function(err, stock){
-					if(!stock){
-						//create a new stock if no stock yet
-							var newStock            = new Stock();
-							newStock.ticker = req.body.ticker;
 
-						//add new stock _id to user's list
-							user.stocks.push(newStock);
+						//add new stock to user's list
+							user.stocks.push({ticker:req.body.ticker});
 
 						//save
 							user.save(function(err) {
 								if (err)
 									throw err;
 								console.log("user has new stock");
-							});					
-						//save
-							newStock.save(function(err) {
-								if (err)
-									throw err;
-								console.log("saved new stock");
 							});
-						//send a id for angular to update the user's list and grey out add button.
-							res.send(JSON.stringify({_id:newStock._id}));
-					}
-					else{
-						//add the user to that bar
-						user.stocks.push(stock);
+						//send info for angular to update the user's list and grey out add button.
+							res.send(JSON.stringify({ticker:req.body.ticker}));
 
-						//save
-							user.save(function(err) {
-								if (err)
-									throw err;
-								console.log("user has new stock");
-							});	
-
-						res.send(JSON.stringify({_id:stock._id}));
-					}
-				});
 			}
 			else {
 				res.redirect("/login");
