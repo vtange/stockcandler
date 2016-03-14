@@ -58,7 +58,14 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	//used to transfer server data to client
 	$scope.init = function(package) {
 		$scope.activeUser = package[0];
-		
+		$scope.activeUser.detailedStocks = [];
+		//set up user's stock list
+		$scope.activeUser.stocks.forEach(function(stock_id){
+			$http.post($window.location.href+"search",{id:stock_id}).success(function(data){
+				console.log(data);
+				$scope.activeUser.detailedStocks.push(data);
+			});
+		})
 	};
 
 	//add stock to user's list
@@ -72,10 +79,12 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	
 	//greys out add stock button
 	$scope.userHasStock = function(){
-		return $scope.activeUser.stocks.indexOf($scope.found._id);
+		if($scope.found)
+			return $scope.activeUser.stocks.indexOf($scope.found._id);
+		else
+			return false;
 	}
-	
-	
+
 }]);//end of controller
 	//PlainJS/JQuery goes here if need be
   //end of function

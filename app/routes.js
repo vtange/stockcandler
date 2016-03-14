@@ -54,34 +54,50 @@ module.exports = function(app) {
 			m: Day’s Range
 			m2: Day’s Range (Realtime)
 		*/
-		var url = "http://finance.yahoo.com/d/quotes.csv?s="+req.body.ticker+"&f=np2omava2"
-		var deferred = Q.defer();
-		var ticker = req.body.ticker.toUpperCase();
-		
-		request.get(url, function (error, result) {
-			deferred.resolve(result.body);
-		})
-		deferred.promise.then(function (value) {
-			var temp = value.split(",");
+		var ticker;
 
-			//check stocks for and _id match. This is to help client's userHasStocks fn.
-			Stock.findOne({ticker:ticker}, function(err, stock){
+		//if no ticker, get info from mongoDB with _id, then searchByTicker
+		if (!req.body.ticker){
+			Stock.findOne({_id:req.body.id}, function(err, stock){
 				if(stock){
-					var _id = stock._id;
+					ticker = stock.ticker;
+					searchByTicker(ticker);
 				}
-				res.send(JSON.stringify({
-					_id: _id,
-					name: temp[0],
-					ticker: ticker,
-					percent: temp[1],
-					open: temp[2],
-					range: temp[3],
-					ask: temp[4],
-					volume: temp[5],
-					avgvolume: temp[6]
-				}));
+			})
+		}
+		else{
+			ticker = req.body.ticker.toUpperCase();
+		}
+		//perform HTTP action
+		function searchByTicker(SYMBOL){
+			var url = "http://finance.yahoo.com/d/quotes.csv?s="+SYMBOL+"&f=np2omava2"
+			var deferred = Q.defer();
+			request.get(url, function (error, result) {
+				deferred.resolve(result.body);
+			})
+			deferred.promise.then(function (value) {
+				var temp = value.split(",");
+
+				//check stocks for and _id match. This is to help client's userHasStocks fn.
+				Stock.findOne({ticker:SYMBOL}, function(err, stock){
+					if(stock){
+						var _id = stock._id;
+					}
+					res.send(JSON.stringify({
+						_id: _id,
+						name: temp[0],
+						ticker: SYMBOL,
+						percent: temp[1],
+						open: temp[2],
+						range: temp[3],
+						ask: temp[4],
+						volume: temp[5],
+						avgvolume: temp[6]
+					}));
+				});
 			});
-		});
+		};
+		searchByTicker(ticker);
     });
 	
     // =====================================
