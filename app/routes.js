@@ -1,5 +1,10 @@
 console.log("	APP/ROUTES.JS")
 
+//for mongoDB interaction routes
+var User = require('./models/user');
+var Stock = require('./models/stock');
+
+//for doing HTTP requests
 var Q = require('q');
 var request = require('request');
 
@@ -70,7 +75,56 @@ module.exports = function(app) {
 				avgvolume: temp[6]
 			}));
 		});
-		
-
     });
+	
+    // =====================================
+    // ADD STOCKS				========
+    // =====================================
+    app.post('/addstock', function(req, res) {
+			if(req.user){
+				var user = req.user;
+				Stock.findOne({id:req.body.ticker}, function(err, stock){
+					if(!stock){
+						//create a new stock if no stock yet
+							var newStock            = new Stock();
+							newStock.ticker = req.body.ticker;
+
+						//add new stock _id to user's list
+							user.stocks.push(newStock);
+
+						//save
+							user.save(function(err) {
+								if (err)
+									throw err;
+								console.log("user has new stock");
+							});					
+						//save
+							newStock.save(function(err) {
+								if (err)
+									throw err;
+								console.log("saved new stock");
+							});
+						//send a id for angular to update the user's list and grey out add button.
+							res.send(JSON.stringify({_id:newStock._id}));
+					}
+					else{
+						//add the user to that bar
+						user.stocks.push(stock);
+
+						//save
+							user.save(function(err) {
+								if (err)
+									throw err;
+								console.log("user has new stock");
+							});	
+
+						res.send(JSON.stringify({_id:stock._id}));
+					}
+				});
+			}
+			else {
+				res.redirect("/login");
+			}
+    });	
+	
 };

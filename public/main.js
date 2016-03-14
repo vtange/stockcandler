@@ -62,9 +62,11 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	};
 
 	$scope.userAddStock = function(){
-		//user == activeUser
-		//ticker = $scope.found.ticker
-		// send a POST request that performs mongoDB ops
+		var info = {user:$scope.activeUser,ticker:$scope.found.ticker}
+		$http.post($window.location.href+"addstock",info).success(function(data){
+			console.log("added you to stock");
+			$scope.activeUser.stocks.push(data);
+		});
 	}
 	
 	
