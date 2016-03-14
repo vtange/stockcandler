@@ -59,9 +59,6 @@ body {
 .stock-name{
 	font-size: 1.5em;
 }
-.stock-chart{
-	width:40%;
-}
 #user-stock-gallery{
 	position:relative;
 	display:flex;
@@ -72,4 +69,26 @@ body {
 	background-color:aliceblue;
 	border-radius:10px;
 	padding: 10px;
+}
+.stock-candle{
+	position:relative;
+	background-color:#222;
+	border-radius: 5px;
+	height:200px;
+}
+.candle{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+
+	background-color:lime;
+}
+.candle-thin{
+	height:80%;
+	width:10px;
+}
+.candle-thick{
+	height:30%;
+	width:25px;
 }

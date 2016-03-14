@@ -35,7 +35,7 @@
 			</div>
 			<div class="stock-info-wide" data-ng-style="stockPopup()">
 				<div>
-					<p class="stock-name">{{found.name}} ({{found.percent}}) </p>
+					<p class="stock-name">{{found.name}} ({{found.ticker}}) </p>
 					<div class="btn btn-success" data-ng-click="userAddStock()" data-ng-disabled="userHasStock()">Add Stock</div>
 				</div>
 				<div>
@@ -46,7 +46,7 @@
 						<p><b>Today's Volume:</b> {{found.volume}} shares</p>
 						<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>
 					</div>
-					<div class="stock-chart">Chart goes here</div>
+					<div class="stock-candle">Chart goes here</div>
 				</div>
 			</div>
 			<hr>
@@ -55,18 +55,21 @@
 		<div id="user-candle-list">
 		<h1>Your Candles</h1>
 			<div id="user-stock-gallery">
-				<div class="stock-info-tall" data-ng-repeat="found in activeUser.detailedStocks">
+				<div class="stock-info-tall" data-ng-repeat="stock in activeUser.detailedStocks">
 					<div>
-						<p class="stock-name">{{found.name}} ({{found.percent}}) </p>
+						<p class="stock-name">{{stock.name}} ({{stock.ticker}}) </p>
 					</div>
 					<div>
-						<div class="stock-chart">Chart goes here</div>
+						<div class="stock-candle">
+							<div class="candle candle-thick"></div>
+							<div class="candle candle-thin"></div>
+						</div>
 						<div>
-							<p><b>Open Price:</b> {{found.open}}</p>
-							<p><b>Today's Range:</b> {{found.range}}</p>
-							<p><b>Current Ask:</b> {{found.ask}}</p>
-							<p><b>Today's Volume:</b> {{found.volume}} shares</p>
-							<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>
+							<p><b>Open Price:</b> {{stock.open}}</p>
+							<p><b>Today's Range:</b> {{stock.range}}</p>
+							<p><b>Current Ask:</b> {{stock.ask}}</p>
+							<p><b>Today's Volume:</b> {{stock.volume}} shares</p>
+							<p><b>Average Volume:</b> {{stock.avgvolume}} shares</p>
 						</div>
 					</div>
 				</div>
