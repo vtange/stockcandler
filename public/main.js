@@ -61,12 +61,18 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		
 	};
 
+	//add stock to user's list
 	$scope.userAddStock = function(){
 		var info = {user:$scope.activeUser,ticker:$scope.found.ticker}
 		$http.post($window.location.href+"addstock",info).success(function(data){
 			console.log("added you to stock");
 			$scope.activeUser.stocks.push(data);
 		});
+	}
+	
+	//greys out add stock button
+	$scope.userHasStock = function(){
+		return $scope.activeUser.stocks.indexOf($scope.found._id);
 	}
 	
 	

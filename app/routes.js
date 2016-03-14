@@ -56,24 +56,31 @@ module.exports = function(app) {
 		*/
 		var url = "http://finance.yahoo.com/d/quotes.csv?s="+req.body.ticker+"&f=np2omava2"
 		var deferred = Q.defer();
+		var ticker = req.body.ticker.toUpperCase();
+		
 		request.get(url, function (error, result) {
 			deferred.resolve(result.body);
 		})
 		deferred.promise.then(function (value) {
 			var temp = value.split(",");
-			//check and add a new ticker to MongoDB if no ticker yet.
-				//add the ticker to user's ticker list
-			
-			res.send(JSON.stringify({
-				name: temp[0],
-				ticker: req.body.ticker.toUpperCase(),
-				percent: temp[1],
-				open: temp[2],
-				range: temp[3],
-				ask: temp[4],
-				volume: temp[5],
-				avgvolume: temp[6]
-			}));
+
+			//check stocks for and _id match. This is to help client's userHasStocks fn.
+			Stock.findOne({ticker:ticker}, function(err, stock){
+				if(stock){
+					var _id = stock._id;
+				}
+				res.send(JSON.stringify({
+					_id: _id,
+					name: temp[0],
+					ticker: ticker,
+					percent: temp[1],
+					open: temp[2],
+					range: temp[3],
+					ask: temp[4],
+					volume: temp[5],
+					avgvolume: temp[6]
+				}));
+			});
 		});
     });
 	

@@ -36,7 +36,7 @@
 			<div id="stock-info" data-ng-style="stockPopup()">
 				<div>
 					<p id="stock-name">{{found.name}} ({{found.percent}}) </p>
-					<div id="add-btn" class="btn btn-success" data-ng-click="userAddStock()">Add Stock</div>
+					<div id="add-btn" class="btn btn-success" data-ng-click="userAddStock()" data-ng-disabled="userHasStock()">Add Stock</div>
 				</div>
 				<div>
 					<div id="stock-data">
