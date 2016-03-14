@@ -39,7 +39,7 @@ body {
 	width:80%;
 	border-radius: 20px;
 }
-#stock-info{
+.stock-info-wide {
 	transition:all 1s ease;
 	opacity: 0;
 	height:0px;
@@ -48,17 +48,28 @@ body {
 	border-radius:10px;
 	padding: 10px;
 }
-#stock-info > div{
+.stock-info-wide > div{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
-#stock-name{
-	font-size: 1.5em;
-}
-#add-btn{
+.stock-info-wide .btn{
 	width:20%;
 }
-#stock-chart{
+.stock-name{
+	font-size: 1.5em;
+}
+.stock-chart{
 	width:40%;
+}
+#user-stock-gallery{
+	position:relative;
+	display:flex;
+	flex-wrap: wrap;
+	width:100%;
+}
+.stock-info-tall {
+	background-color:aliceblue;
+	border-radius:10px;
+	padding: 10px;
 }

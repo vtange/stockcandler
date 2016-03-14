@@ -33,20 +33,20 @@
 					<input type="text" class="form-control" data-ng-model="input.ticker" placeholder="Enter a ticker symbol here">
 				</form>
 			</div>
-			<div id="stock-info" data-ng-style="stockPopup()">
+			<div class="stock-info-wide" data-ng-style="stockPopup()">
 				<div>
-					<p id="stock-name">{{found.name}} ({{found.percent}}) </p>
-					<div id="add-btn" class="btn btn-success" data-ng-click="userAddStock()" data-ng-disabled="userHasStock()">Add Stock</div>
+					<p class="stock-name">{{found.name}} ({{found.percent}}) </p>
+					<div class="btn btn-success" data-ng-click="userAddStock()" data-ng-disabled="userHasStock()">Add Stock</div>
 				</div>
 				<div>
-					<div id="stock-data">
+					<div>
 						<p><b>Open Price:</b> {{found.open}}</p>
 						<p><b>Today's Range:</b> {{found.range}}</p>
 						<p><b>Current Ask:</b> {{found.ask}}</p>
 						<p><b>Today's Volume:</b> {{found.volume}} shares</p>
 						<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>
 					</div>
-					<div id="stock-chart">Chart goes here</div>
+					<div class="stock-chart">Chart goes here</div>
 				</div>
 			</div>
 			<hr>
@@ -54,12 +54,23 @@
 		<hr>
 		<div id="user-candle-list">
 		<h1>Your Candles</h1>
-		
-		next steps:
-			1. make nicer display for stock info
-			2. make add stock to list button
-			
-		
+			<div id="user-stock-gallery">
+				<div class="stock-info-tall" data-ng-repeat="found in activeUser.detailedStocks">
+					<div>
+						<p class="stock-name">{{found.name}} ({{found.percent}}) </p>
+					</div>
+					<div>
+						<div class="stock-chart">Chart goes here</div>
+						<div>
+							<p><b>Open Price:</b> {{found.open}}</p>
+							<p><b>Today's Range:</b> {{found.range}}</p>
+							<p><b>Current Ask:</b> {{found.ask}}</p>
+							<p><b>Today's Volume:</b> {{found.volume}} shares</p>
+							<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	
