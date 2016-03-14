@@ -79,8 +79,17 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	
 	//greys out add stock button
 	$scope.userHasStock = function(){
-
+		if($scope.activeUser && $scope.found){
+			return !(stockScan($scope.activeUser.stocks, $scope.found.ticker));
+		}
+		else{
 			return false;
+		}
+	}
+	function stockScan(arr, ticker){
+		return arr.every(function(obj){
+			return obj.ticker !== ticker;
+		})
 	}
 
 }]);//end of controller
