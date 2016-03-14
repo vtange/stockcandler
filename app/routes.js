@@ -15,10 +15,42 @@ module.exports = function(app) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('index.ejs', {
-            user : req.user, // get the user out of session and pass to template
-			packagedUser : JSON.stringify([req.user])
-        }); // load the index.ejs file
+		
+		//if logged in
+		if(req.user){
+			
+			//AND user has stocks. (Cannot jump straight to req.user.stocks b/c if user doesn't exist .stocks will return error)
+			if(req.user.stocks){
+				var stockDetails = [];
+				var stocksLeft = req.user.stocks.length;
+				req.user.stocks.forEach(function(stock_id){
+					Stock.findOne({_id:stock_id}, function(err, stock){
+						if(stock){
+							stockDetails.push(stock);
+							stocksLeft -= 1;
+						}
+					})
+				});
+				if(stocksLeft===0){
+					res.render('index.ejs', {
+						user : req.user, // get the user out of session and pass to template
+						packagedUser : JSON.stringify([req.user,stockDetails])
+					}); // load the index.ejs file
+				}
+			}
+			else{
+				res.render('index.ejs', {
+					user : req.user, // get the user out of session and pass to template
+					packagedUser : JSON.stringify([req.user])
+				}); // load the index.ejs file
+			}
+		}
+		else{
+			res.render('index.ejs', {
+				user : req.user, // get the user out of session and pass to template
+				packagedUser : JSON.stringify([req.user])
+			}); // load the index.ejs file
+		}
     });
 	
     // =====================================
@@ -54,20 +86,8 @@ module.exports = function(app) {
 			m: Day’s Range
 			m2: Day’s Range (Realtime)
 		*/
-		var ticker;
+		var ticker = req.body.ticker.toUpperCase();;
 
-		//if no ticker, get info from mongoDB with _id, then searchByTicker
-		if (!req.body.ticker){
-			Stock.findOne({_id:req.body.id}, function(err, stock){
-				if(stock){
-					ticker = stock.ticker;
-					searchByTicker(ticker);
-				}
-			})
-		}
-		else{
-			ticker = req.body.ticker.toUpperCase();
-		}
 		//perform HTTP action
 		function searchByTicker(SYMBOL){
 			var url = "http://finance.yahoo.com/d/quotes.csv?s="+SYMBOL+"&f=np2omava2"

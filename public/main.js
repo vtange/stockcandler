@@ -58,22 +58,15 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	//used to transfer server data to client
 	$scope.init = function(package) {
 		$scope.activeUser = package[0];
-		$scope.activeUser.detailedStocks = [];
-		//set up user's stock list
-		$scope.activeUser.stocks.forEach(function(stock_id){
-			$http.post($window.location.href+"search",{id:stock_id}).success(function(data){
-				console.log(data);
-				$scope.activeUser.detailedStocks.push(data);
-			});
-		})
+		console.log(package);
+		$scope.activeUser.detailedStocks = package[1];
 	};
 
 	//add stock to user's list
 	$scope.userAddStock = function(){
 		var info = {user:$scope.activeUser,ticker:$scope.found.ticker}
 		$http.post($window.location.href+"addstock",info).success(function(data){
-			console.log("added you to stock");
-			$scope.activeUser.stocks.push(data);
+			$scope.activeUser.detailedStocks.push(data);
 		});
 	}
 	
