@@ -12,10 +12,10 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	//ng-style for #stock-info
 	$scope.stockPopup = function(){
 		if($scope.found){
-			return { "display":"static" }
+			return { "display":"static", "opacity":1 }
 		}
 		else{
-			return { "display":"none" }
+			return { "display":"none", "opacity":0 }
 		}
 	}
 	
@@ -95,9 +95,10 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	//candleStyling -> Candle maker
 	$scope.candleMakerThick = function(stockInfo){
 		if(stockInfo){
-			var range = getRange(stockInfo.range);
-			var open = parseFloat(stockInfo.open.substring(1),10);
-			var ask = parseFloat(stockInfo.ask.substring(1),10);
+			//remove commas for $1,000+ stocks
+			var range = getRange(stockInfo.low.replace(",",""),stockInfo.high.replace(",",""));
+			var open = parseFloat(stockInfo.open.replace(",","").substring(1),10);
+			var ask = parseFloat(stockInfo.ask.replace(",","").substring(1),10);
 			var openAskRange = Math.max(open,ask) - Math.min(open,ask);
 			var openAskMdpt = (Math.max(open,ask) - Math.min(open,ask))/2;
 
@@ -116,11 +117,9 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	}
 	$scope.candleMakerThin = function(stockInfo){
 	}
-	function getRange(str){
-		//example: "$9.36 - $9.80"
-		str = str.split(" - ");
-		var zero = parseFloat(str[0].substring(1),10).toFixed(2);
-		var hundred = parseFloat(str[1].substring(1),10).toFixed(2);
+	function getRange(low,high){
+		var zero = parseFloat(low.substring(1),10).toFixed(2);
+		var hundred = parseFloat(high.substring(1),10).toFixed(2);
 		return (hundred - zero).toFixed(2);
 	}
 	

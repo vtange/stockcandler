@@ -13,9 +13,7 @@
 <%- include ../node_modules/basic-login-bar/views/partials/header.ejs %>
 <div class="container">
     <% if (!user) { %>
-	
-        <div class="alert alert-danger">not logged in</div>
-	
+
 		<div id="intro" class="vert-centered">
 			<h1>Welcome to StockCandler!</h1>
 			<p>								<a href="/login" class="btn btn-default">Login</a> or 
@@ -23,9 +21,7 @@
 		</div>
 	
     <% } else {%>
-    
-	<div class="alert alert-danger">logged in</div>
-	
+
 	<div id="body" data-ng-app="Candler" data-ng-controller="MainCtrl as main" data-ng-init="package = <%= packagedUser %>;init(package)">
 		<div id="user-candle-list">
 		<h1 style="text-align:center;">Your Candles</h1>
@@ -47,11 +43,11 @@
 						</div>
 						<div>
 							<div>
-								<p><b>Open Price:</b> {{found.open}}</p>
+								<p style="font-size:2em">{{found.ask}}</p><!--
 								<p><b>Today's Range:</b> {{found.range}}</p>
 								<p><b>Current Ask:</b> {{found.ask}}</p>
 								<p><b>Today's Volume:</b> {{found.volume}} shares</p>
-								<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>
+								<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>-->
 							</div>
 						</div>
 						<div class="btn btn-success" data-ng-click="userAddStock()" data-ng-disabled="userHasStock()">+ Add Stock</div>
@@ -68,11 +64,11 @@
 							</div>
 						</div>
 						<div>
-							<p><b>Open Price:</b> {{stock.open}}</p>
+							<p style="font-size:1.4em">{{stock.ask}}</p><!--
 							<p><b>Today's Range:</b> {{stock.range}}</p>
 							<p><b>Current Ask:</b> {{stock.ask}}</p>
 							<p><b>Today's Volume:</b> {{stock.volume}} shares</p>
-							<p><b>Average Volume:</b> {{stock.avgvolume}} shares</p>
+							<p><b>Average Volume:</b> {{stock.avgvolume}} shares</p>-->
 						</div>
 					</div>
 				</div>
