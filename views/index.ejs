@@ -46,7 +46,11 @@
 						<p><b>Today's Volume:</b> {{found.volume}} shares</p>
 						<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>
 					</div>
-					<div class="stock-candle">Chart goes here</div>
+					<div class="stock-candle">
+						<div data-ng-style="candleMakerThin(found)" class="candle candle-thin">
+							<div data-ng-style="candleMakerThick(found)" class="candle candle-thick"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<hr>
