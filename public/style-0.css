@@ -47,8 +47,8 @@ body:after{
 	position: relative;
 	display:flex;
 	flex-direction: column;
-	width:15%;
-	
+	width:25%;
+	height:613px;
 	background-color: rgba(0,0,0,0.5);
 }
 #stock-finder > div{
@@ -58,11 +58,14 @@ body:after{
 .form-control{
 	background-color: #111;
 	color: antiquewhite;
-	text-transform: uppercase;
 	
 	box-sizing: border-box;
 	display:inline-block;
 	border-radius: 0px;
+	
+	text-transform: uppercase;
+	font-size: 1.5em;
+	height:69px;
 }
 .stock-name{
 	font-size: 1.5em;
@@ -74,15 +77,31 @@ body:after{
 	width:100%;
 }
 .stock-info-tall {
-	background-color:rgba(220,220,240,0.85);;
+	background: rgba(220,220,240,0.8);
+	background: -moz-linear-gradient(-45deg, rgba(220,220,240,0.8) 0%, rgba(246,246,246,0.75) 47%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(220,220,240,0.8)), color-stop(47%, rgba(246,246,246,0.75)), color-stop(100%, rgba(220,220,240,0.7)));
+	background: -webkit-linear-gradient(-45deg, rgba(220,220,240,0.8) 0%, rgba(246,246,246,0.75) 47%);
+	background: -o-linear-gradient(-45deg, rgba(220,220,240,0.8) 0%, rgba(246,246,246,0.75) 47%);
+	background: -ms-linear-gradient(-45deg, rgba(220,220,240,0.8) 0%, rgba(246,246,246,0.75) 47%);
+	background: linear-gradient(135deg, rgba(220,220,240,0.8) 0%, rgba(246,246,246,0.75) 47%);
 	color:#333;
 	
-	width: 30%;
-	border-radius:10px;
+	width: 25%;
+	min-height: 542px;
+	max-height: 542px;
 	padding: 30px;
-	margin: 20px;
+	border-left: 1px solid #ddd;
+	border-top: 1px solid #ddd;
 }
-
+.stock-info-tall:last-child, .stock-info-tall:nth-child(4){
+	/*for gallery */
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+#stock-finder .stock-info-tall{
+	/*for searched stocks */
+	border-bottom: 1px solid #ddd;
+}
 .stock-candle::before {
   content: "";
   position: absolute;
