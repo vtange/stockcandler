@@ -76,6 +76,8 @@ body:after{
 	position:relative;
 	display:flex;
 	flex-wrap: wrap;
+	
+	min-width: 1140px;
 	width:100%;
 	margin-bottom: 10%;
 }
@@ -98,7 +100,7 @@ body:after{
 	border-left: 1px solid #ddd;
 	border-top: 1px solid #ddd;
 }
-.stock-info-tall:last-child{
+#user-stock-gallery > .stock-info-tall:last-child{
 	/*for gallery */
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
