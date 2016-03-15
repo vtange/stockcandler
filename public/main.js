@@ -102,8 +102,7 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		
 		var heightSetting = parseInt((openAskRange/range)*100,10) + "%"
 		var topSetting =  parseInt((openAskMdpt/range)*100,10) + "%"
-		console.log(stockInfo.ticker+": height: "+heightSetting+", top: "+topSetting);
-		return { "height": heightSetting, "top":topSetting }
+		return { "height": heightSetting, "transform":"translate(-50%,-"+topSetting+")" }
 	}
 	$scope.candleMakerThin = function(stockInfo){
 	}
