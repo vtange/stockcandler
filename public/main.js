@@ -94,23 +94,25 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 
 	//candleStyling -> Candle maker
 	$scope.candleMakerThick = function(stockInfo){
-		var range = getRange(stockInfo.range);
-		var open = parseFloat(stockInfo.open.substring(1),10);
-		var ask = parseFloat(stockInfo.ask.substring(1),10);
-		var openAskRange = Math.max(open,ask) - Math.min(open,ask);
-		var openAskMdpt = (Math.max(open,ask) - Math.min(open,ask))/2;
-		
-		// calc positions and height of fat part
-		var heightSetting = parseInt((openAskRange/range)*100,10) + "%"
-		var topSetting =  parseInt((openAskMdpt/range)*100,10) + "%"
-		
-		// positive = green candle
-		// negative = red candle
-		if(ask-open>0)
-			return { "background-color":"limegreen", "height": heightSetting, "transform":"translate(-50%,-"+topSetting+")" }
-		
-		else
-			return{"background-color":"orangered", "height": heightSetting, "transform":"translate(-50%,-"+topSetting+")" }
+		if(stockInfo){
+			var range = getRange(stockInfo.range);
+			var open = parseFloat(stockInfo.open.substring(1),10);
+			var ask = parseFloat(stockInfo.ask.substring(1),10);
+			var openAskRange = Math.max(open,ask) - Math.min(open,ask);
+			var openAskMdpt = (Math.max(open,ask) - Math.min(open,ask))/2;
+
+			// calc positions and height of fat part
+			var heightSetting = parseInt((openAskRange/range)*100,10) + "%"
+			var topSetting =  parseInt((openAskMdpt/range)*100,10) + "%"
+
+			// positive = green candle
+			// negative = red candle
+			if(ask-open>0)
+				return { "background-color":"limegreen", "height": heightSetting, "transform":"translate(-50%,-"+topSetting+")" }
+
+			else
+				return{"background-color":"orangered", "height": heightSetting, "transform":"translate(-50%,-"+topSetting+")" }
+		}
 	}
 	$scope.candleMakerThin = function(stockInfo){
 	}
