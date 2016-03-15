@@ -92,6 +92,29 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		})
 	}
 
+	//candleStyling -> Candle maker
+	$scope.candleMakerThick = function(stockInfo){
+		var range = getRange(stockInfo.range);
+		var open = parseFloat(stockInfo.open.substring(1),10);
+		var ask = parseFloat(stockInfo.ask.substring(1),10);
+		var openAskRange = Math.max(open,ask) - Math.min(open,ask);
+		var openAskMdpt = (Math.max(open,ask) - Math.min(open,ask))/2;
+		
+		var heightSetting = parseInt((openAskRange/range)*100,10) + "%"
+		var topSetting =  parseInt((openAskMdpt/range)*100,10) + "%"
+		console.log(stockInfo.ticker+": height: "+heightSetting+", top: "+topSetting);
+		return { "height": heightSetting, "top":topSetting }
+	}
+	$scope.candleMakerThin = function(stockInfo){
+	}
+	function getRange(str){
+		//example: "$9.36 - $9.80"
+		str = str.split(" - ");
+		var zero = parseFloat(str[0].substring(1),10).toFixed(2);
+		var hundred = parseFloat(str[1].substring(1),10).toFixed(2);
+		return (hundred - zero).toFixed(2);
+	}
+	
 }]);//end of controller
 	//PlainJS/JQuery goes here if need be
   //end of function

@@ -61,8 +61,9 @@
 					</div>
 					<div>
 						<div class="stock-candle">
-							<div class="candle candle-thick"></div>
-							<div class="candle candle-thin"></div>
+							<div data-ng-style="candleMakerThin(stock)" class="candle candle-thin">
+								<div data-ng-style="candleMakerThick(stock)" class="candle candle-thick"></div>
+							</div>
 						</div>
 						<div>
 							<p><b>Open Price:</b> {{stock.open}}</p>
