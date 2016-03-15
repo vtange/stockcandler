@@ -26,17 +26,22 @@
     
 	<div class="alert alert-danger">logged in</div>
 	
-	<div data-ng-app="Candler" data-ng-controller="MainCtrl as main" data-ng-init="package = <%= packagedUser %>;init(package)">
+	<div id="body" data-ng-app="Candler" data-ng-controller="MainCtrl as main" data-ng-init="package = <%= packagedUser %>;init(package)">
 		<div id="stock-finder">
 			<div>
 				<form data-ng-submit="searchTicker(input.ticker)">
-					<input type="text" class="form-control" data-ng-model="input.ticker" placeholder="Enter a ticker symbol here">
+					<input type="text" class="form-control" data-ng-model="input.ticker" placeholder="Ticker Here">
 				</form>
 			</div>
-			<div class="stock-info-wide" data-ng-style="stockPopup()">
+			<div class="stock-info-tall" data-ng-style="stockPopup()">
 				<div>
 					<p class="stock-name">{{found.name}} ({{found.ticker}}) </p>
 					<div class="btn btn-success" data-ng-click="userAddStock()" data-ng-disabled="userHasStock()">Add Stock</div>
+				</div>
+				<div class="stock-candle">
+						<div data-ng-style="candleMakerThin(found)" class="candle candle-thin">
+							<div data-ng-style="candleMakerThick(found)" class="candle candle-thick"></div>
+						</div>
 				</div>
 				<div>
 					<div>
@@ -46,16 +51,10 @@
 						<p><b>Today's Volume:</b> {{found.volume}} shares</p>
 						<p><b>Average Volume:</b> {{found.avgvolume}} shares</p>
 					</div>
-					<div class="stock-candle">
-						<div data-ng-style="candleMakerThin(found)" class="candle candle-thin">
-							<div data-ng-style="candleMakerThick(found)" class="candle candle-thick"></div>
-						</div>
-					</div>
 				</div>
 			</div>
 			<hr>
 		</div>
-		<hr>
 		<div id="user-candle-list">
 		<h1>Your Candles</h1>
 			<div id="user-stock-gallery">

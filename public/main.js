@@ -12,10 +12,10 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 	//ng-style for #stock-info
 	$scope.stockPopup = function(){
 		if($scope.found){
-			return { "height": "100%", "opacity":1 }
+			return { "display":"static" }
 		}
 		else{
-			return { "height": "0px", "opacity":0 }
+			return { "display":"none" }
 		}
 	}
 	
