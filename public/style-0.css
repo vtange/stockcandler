@@ -7,7 +7,7 @@ body {
 	background-image: url("http://res.cloudinary.com/dmj8qtant/image/upload/c_limit,w_1600/v1458020372/parts/40324d1322809259-gridwhite.png");
 	background-repeat: repeat;
 	background-position: top;
-	background-size: contain;
+	background-size: 30%;
      z-index: -10;
 	color:white;
 }
@@ -48,11 +48,13 @@ body:after{
 	display:flex;
 	flex-direction: column;
 	width:25%;
-	height:613px;
+	height:611px;
 	background-color: rgba(0,0,0,0.5);
+	
+	transform: translateY(-69px);
+	margin-bottom: -71px;
 }
 #stock-finder > div{
-	position: relative;
 	width:100%;
 }
 .form-control{
@@ -75,8 +77,11 @@ body:after{
 	display:flex;
 	flex-wrap: wrap;
 	width:100%;
+	margin-bottom: 10%;
 }
 .stock-info-tall {
+	transition: all 1s ease;
+	
 	background: rgba(220,220,240,0.8);
 	background: -moz-linear-gradient(-45deg, rgba(220,220,240,0.8) 0%, rgba(246,246,246,0.75) 47%);
 	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(220,220,240,0.8)), color-stop(47%, rgba(246,246,246,0.75)), color-stop(100%, rgba(220,220,240,0.7)));
@@ -93,14 +98,14 @@ body:after{
 	border-left: 1px solid #ddd;
 	border-top: 1px solid #ddd;
 }
-.stock-info-tall:last-child, .stock-info-tall:nth-child(4){
+.stock-info-tall:last-child{
 	/*for gallery */
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 }
-#stock-finder .stock-info-tall{
-	/*for searched stocks */
-	border-bottom: 1px solid #ddd;
+.stock-info-tall:nth-child(4){
+	/*for gallery */
+	border-right: 1px solid #ddd;
 }
 .stock-candle::before {
   content: "";
