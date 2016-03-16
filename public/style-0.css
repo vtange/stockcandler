@@ -69,7 +69,7 @@ body:after{
 	font-size: 1.5em;
 	height:69px;
 }
-.stock-name{
+.stock-name, .stock-price{
 	font-size: 1.5em;
 }
 #user-stock-gallery{
@@ -124,15 +124,16 @@ body:after{
 	background-size: cover;
 }
 .stock-candle{
+	/* background for candles */
 	position:relative;
 	background-color:#222;
-
 
 	border-radius: 5px;
 	height:200px;	
 	padding: 10%;
 }
 .candle{
+	/* candle positioning */
 	top:50%;
 	left:50%;
 	z-index: 2;
@@ -141,13 +142,15 @@ body:after{
 	transform: translate(-50%, -50%);
 }
 .candle-thin{
+	/* thick relative to thin */
 	position: relative;
-	height:100%;
+	height:100%;/* height and position changes if two candles */
 	width:10px;
 	
 	background-color:white;
 }
 .candle-thick{
+	/* thick relative to thin */
 	position:absolute;
 	height:0%;
 	width:50px;
