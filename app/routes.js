@@ -2,6 +2,12 @@ console.log("	APP/ROUTES.JS")
 
 //for mongoDB interaction routes
 var User = require('./models/user');
+var StockHist = require('./models/stock');
+
+//for date comparison / stock memory
+function getDate(){
+	return new Date().toString().slice(0,15);
+}
 
 //for doing HTTP requests
 var Q = require('q');
@@ -56,7 +62,7 @@ module.exports = function(app) {
 		var ticker = req.body.ticker.toUpperCase();;
 
 		//perform HTTP action
-		function searchByTicker(SYMBOL){
+		function searchByTicker(SYMBOL, STOCK){
 			var url = "http://finance.yahoo.com/d/quotes.csv?s="+SYMBOL+"&f=p2oghava2n"
 			var deferred = Q.defer();
 			request.get(url, function (error, result) {
@@ -65,7 +71,47 @@ module.exports = function(app) {
 			deferred.promise.then(function (value) {
 
 				var temp = value.split(",");
-
+				
+				//if no stock, make one
+				if(!STOCK){
+					STOCK            = new StockHist();
+					//if no stock, all data goes to today and not yesterday
+					STOCK.name = temp[7];
+					STOCK.ticker = SYMBOL;
+					STOCK.today.percent = temp[0];
+					STOCK.today.open = temp[1];
+					STOCK.today.low = temp[2];
+					STOCK.today.high = temp[3];
+					STOCK.today.ask = temp[4];
+					STOCK.today.volume = temp[5];
+					STOCK.today.avgvolume = temp[6];
+					STOCK.lastUpdated = getDate();
+				}
+				else{
+					//push all old data to yesterday. update lastUpdated.
+					STOCK.yesterday.percent = STOCK.today.percent;
+					STOCK.yesterday.open = STOCK.today.open;
+					STOCK.yesterday.low = STOCK.today.low;
+					STOCK.yesterday.high = STOCK.today.high;
+					STOCK.yesterday.ask = STOCK.today.ask;
+					STOCK.yesterday.volume = STOCK.today.volume;
+					STOCK.yesterday.avgvolume = STOCK.today.avgvolume;
+					STOCK.today.percent = temp[0];
+					STOCK.today.open = temp[1];
+					STOCK.today.low = temp[2];
+					STOCK.today.high = temp[3];
+					STOCK.today.ask = temp[4];
+					STOCK.today.volume = temp[5];
+					STOCK.today.avgvolume = temp[6];
+					STOCK.lastUpdated = getDate();
+				}
+					//save the STOCK
+				STOCK.save(function(err){
+					if(err)
+						throw err;
+					console.log('updated ' + STOCK.ticker);
+				})
+				
 				// send the info
 					res.send(JSON.stringify({
 						ticker: SYMBOL,
@@ -80,7 +126,35 @@ module.exports = function(app) {
 					}));
 			});
 		};
-		searchByTicker(ticker);
+		
+		//check mongoDB
+		StockHist.findOne({ticker:ticker},function(err, stock){
+			//if found stock
+			if(stock){
+				//if lastUpdated = today's date
+				//res send data from stock
+				if(stock.lastUpdated === getDate()){
+					res.send(JSON.stringify({
+						ticker: stock.ticker,
+						percent: stock.today.percent,
+						open: stock.today.open,
+						low: stock.today.low,
+						high: stock.today.high,
+						ask: stock.today.ask,
+						volume: stock.today.volume,
+						avgvolume: stock.today.avgvolume,
+						name: stock.name,
+					}));
+				}
+				else{
+					searchByTicker(ticker, stock);
+				}
+
+			}
+			else{
+				searchByTicker(ticker, stock);
+			}
+		});
     });
 	
     // =====================================
