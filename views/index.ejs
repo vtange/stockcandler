@@ -64,7 +64,9 @@
 							</div>
 						</div>
 						<div>
-							<p style="font-size:1.4em">{{stock.ask}}</p><!--
+							<p style="font-size:1.4em">{{stock.ask}}</p>
+							<div class="btn btn-danger" data-ng-click="userRemStock(stock, $index)">- Remove Stock</div>
+							<!--
 							<p><b>Today's Range:</b> {{stock.range}}</p>
 							<p><b>Current Ask:</b> {{stock.ask}}</p>
 							<p><b>Today's Volume:</b> {{stock.volume}} shares</p>

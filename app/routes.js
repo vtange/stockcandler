@@ -181,5 +181,30 @@ module.exports = function(app) {
 				res.redirect("/login");
 			}
     });	
+	// =====================================
+    // REMOVE STOCKS				========
+    // =====================================
+    app.post('/remstock', function(req, res) {
+			if(req.user){
+				var user = req.user;
+
+						//remove stock to user's list
+							user.stocks.splice(req.body.index,1);
+
+						//save
+							user.save(function(err) {
+								if (err)
+									throw err;
+								console.log("user less one ticker");
+							});
+						//send info for angular to confirm
+							res.send(JSON.stringify({ticker:req.body.ticker}));
+
+			}
+			else {
+				res.redirect("/login");
+			}
+    });
+
 	
 };

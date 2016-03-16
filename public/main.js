@@ -77,6 +77,15 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		});
 	}
 	
+	//remove stock to user's list
+	$scope.userRemStock = function(stock, index){
+		var info = {ticker:stock.ticker, index:index};
+		$http.post($window.location.href+"remstock",info).success(function(data){
+			$scope.activeUser.stocks.splice(index,1);
+			$scope.activeUser.detailedStocks.splice($scope.activeUser.detailedStocks.indexOf(stock),1);
+		});
+	}
+
 	//greys out add stock button
 	$scope.userHasStock = function(){
 		if($scope.activeUser && $scope.found){
