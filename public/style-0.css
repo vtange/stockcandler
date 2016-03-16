@@ -34,6 +34,39 @@ body:after{
 }
 /* BASICS ^ */
 /* RESET */
+/* HEADER */
+.navbar-default{
+	background-color:rgba(220,220,240,0.1);
+	border-radius: 0;
+	border:0px;
+	border-bottom: 1px solid #ddd;
+}
+#header > #group1 > a{
+	color: white;
+}
+#header > #group1, #header > #group1 a{
+	display: flex;
+	flex-direction: row;
+}
+#header > #group1:after{
+	content:"";
+	position: relative;
+	width:20px;
+	height:50px;
+	margin: 10px;
+	border-radius: 5px;
+	border:2px solid limegreen;
+}
+#header > #group1 a:after{
+	content:"";
+	position: relative;
+	width:20px;
+	height:30px;
+	margin-left: 10px;
+	margin-top: 20px;
+	border-radius: 5px;
+	border:2px solid orangered;
+}
 
 /* CUSTOM */
 #body{
