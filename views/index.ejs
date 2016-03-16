@@ -51,6 +51,7 @@
 					</div>
 				</div>
 				<div class="stock-info-tall" data-ng-repeat="stock in activeUser.detailedStocks">
+					<a class="boxclose" data-ng-click="userRemStock(stock, $index)"></a>
 					<div>
 						<p class="stock-name">{{stock.name}} ({{stock.ticker}})</p>
 					</div>
@@ -63,7 +64,6 @@
 						<div>
 							<p class="stock-price">Now at: {{stock.ask}}</p>
 							<p><b data-ng-style="colorText(stock.avgvolume,stock.volume)">{{checkVolume(stock.avgvolume,stock.volume)}}</b>{{aboveBelow(stock.avgvolume,stock.volume)}}Volume</p>
-							<div class="btn btn-danger" data-ng-click="userRemStock(stock, $index)">- Remove Stock</div>
 						</div>
 					</div>
 				</div>

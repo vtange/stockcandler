@@ -74,6 +74,7 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		$http.post($window.location.href+"addstock",info).success(function(data){
 			$scope.activeUser.stocks.push(data);
 			$scope.activeUser.detailedStocks.push($scope.found);
+			$scope.found = null;
 		});
 	}
 	

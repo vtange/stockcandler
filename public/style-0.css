@@ -71,6 +71,26 @@ body:after{
 .stock-name, .stock-price{
 	font-size: 1.5em;
 }
+/*----------*/
+/*-X-*/
+/*----------*/
+a:hover{
+    text-decoration: none;
+}
+a.boxclose{
+    position: absolute;
+	top:0;
+	right:15px;
+	
+    cursor:pointer;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+	z-index: 9;
+}
+.boxclose:before{
+    content: "×";
+}
 #user-stock-gallery{
 	position:relative;
 	display:flex;
@@ -81,8 +101,7 @@ body:after{
 	margin-bottom: 10%;
 }
 .stock-info-tall {
-	transition: all 1s ease;
-	
+	position: relative;
 	background: rgba(220,220,240,0.8);
 	background: -moz-linear-gradient(-45deg, rgba(220,220,240,0.1) 0%, rgba(246,246,246,0.15) 47%);
 	background: -webkit-linear-gradient(-45deg, rgba(220,220,240,0.1) 0%, rgba(246,246,246,0.15) 47%);
@@ -101,7 +120,7 @@ body:after{
 	/*for gallery */
 	border-right: 1px solid #ddd;
 }
-#user-stock-gallery > .stock-info-tall:nth-last-child(-n+4) {
+#user-stock-gallery > .stock-info-tall:nth-last-child(-n+4), #stock-finder > .stock-info-tall {
 	/*last four gets border bottom */
 	border-bottom: 1px solid #ddd;
 }
