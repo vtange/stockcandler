@@ -101,6 +101,10 @@ body:after{
 	/*for gallery */
 	border-right: 1px solid #ddd;
 }
+#user-stock-gallery > .stock-info-tall:nth-last-child(-n+4) {
+	/*last four gets border bottom */
+	border-bottom: 1px solid #ddd;
+}
 .stock-candle::before {
   content: "";
   position: absolute;

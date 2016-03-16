@@ -145,7 +145,7 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 			return { "color":"limegreen" }
 		}
 		else{
-			return { "color":"orangered" }
+			return { "color":"salmon" }
 		}
 	}
 
