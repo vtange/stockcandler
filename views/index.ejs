@@ -44,6 +44,8 @@
 								<div>
 									<p class="stock-price">Now at: {{found.ask}}</p>
 									<p><b data-ng-style="colorText(found.avgvolume,found.volume)">{{checkVolume(found.avgvolume,found.volume)}}</b>{{aboveBelow(found.avgvolume,found.volume)}}Volume</p>
+									<p class="candle-type">Shooting Star</p>
+									<p class="candle-forcast">For {{found.ticker}}, 50% chance tommorow will be down.</p>
 								</div>
 							</div>
 							<div class="btn btn-success" data-ng-click="userAddStock()" data-ng-disabled="userHasStock()">+ Add Stock</div>
@@ -64,6 +66,8 @@
 						<div>
 							<p class="stock-price">Now at: {{stock.ask}}</p>
 							<p><b data-ng-style="colorText(stock.avgvolume,stock.volume)">{{checkVolume(stock.avgvolume,stock.volume)}}</b>{{aboveBelow(stock.avgvolume,stock.volume)}}Volume</p>
+							<p class="candle-type">Shooting Star</p>
+							<p class="candle-forcast">For {{stock.ticker}}, 50% chance tommorow will be down.</p>
 						</div>
 					</div>
 				</div>
