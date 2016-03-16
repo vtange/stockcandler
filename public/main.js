@@ -132,6 +132,25 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		return (hundred - zero).toFixed(2);
 	}
 	
+	//sets text for stock trade volume
+	$scope.checkVolume = function(avg, current){
+		avg = parseInt(avg,10);
+		return (parseInt((((parseInt(current,10) - avg)/avg)*100),10)+"%").replace("-","");
+	}
+	$scope.aboveBelow = function(avg, current){
+		return avg > current ? " above average " : " below average ";
+	}
+	$scope.colorText = function(avg, current){
+		if(avg > current){
+			return { "color":"limegreen" }
+		}
+		else{
+			return { "color":"orangered" }
+		}
+	}
+
+
+
 }]);//end of controller
 	//PlainJS/JQuery goes here if need be
   //end of function
