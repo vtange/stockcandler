@@ -125,6 +125,7 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 
 			$socket.emit('stock', $scope.found.ticker);
 			$scope.found = null;
+			$scope.placeholderTxt = "Search for a Stock";
 		});
 	}
 	
@@ -202,7 +203,7 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 
 	//socket stuff here
 	$socket.on('stock', function (data) {
-		$scope.recentStocksList.push(data)
+		$scope.recentStocksList.push(data);
 	});
 
 }]);//end of controller

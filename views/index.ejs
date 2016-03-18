@@ -23,7 +23,7 @@
 		</div>
 	
     <% } else {%>
-<div id="recent-stocks">Recent Stocks:<span data-ng-repeat="ticker in recentStocksList">{{ticker}}</span></div>
+<div id="recent-stocks">Recent Stocks: <div><span data-ng-repeat="ticker in recentStocksList" data-ng-click="searchTicker(ticker)">{{ticker}} </span></div></div>
 	<div class="container">
 	<div id="body" data-ng-init="package = <%= packagedUser %>;init(package)">
 		<div id="user-candle-list">
