@@ -219,17 +219,21 @@ a.boxclose{
 	background-color: #666;
 }
 #recent-stocks{
+	display: flex;
+	flex-direction: row;
 	width:100%;
 	background-color:rgba(20,20,40,0.9);
 	border-bottom: 1px solid #555;
 	padding: 5px;
 
 }
-#recent-stock div{
-	display: inline-flex;
+#recent-stocks div{
+	display: flex;
 	flex-direction: row-reverse;
 }
 #recent-stocks span{
 	cursor: pointer;
 	color: lime;
+	margin-left: 10px;
+	margin-right: 10px;
 }
