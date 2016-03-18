@@ -1,8 +1,13 @@
 (function() {
     //start of function
-  var app = angular.module('Candler', []);
-
-app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, $window){
+  var app = angular.module('Candler', ['socket.io']);
+	
+//setup socketURL
+app.config(function ($socketProvider) {
+    $socketProvider.setConnectionUrl('http://localhost:8080');
+});
+	
+app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scope, $http, $window, $socket){
 	//search stocks form
 	$scope.input = {};
 
@@ -74,6 +79,8 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		$http.post($window.location.href+"addstock",info).success(function(data){
 			$scope.activeUser.stocks.push(data);
 			$scope.activeUser.detailedStocks.push($scope.found);
+			
+			$socket.emit('echo', $scope.found.ticker);
 			$scope.found = null;
 		});
 	}
@@ -150,7 +157,10 @@ app.controller('MainCtrl', ['$scope','$http','$window', function($scope, $http, 
 		}
 	}
 
-
+	//socket stuff here
+	$socket.on('echo', function (data) {
+		$scope.serverResponse = data;
+	});
 
 }]);//end of controller
 	//PlainJS/JQuery goes here if need be

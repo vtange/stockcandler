@@ -46,5 +46,5 @@ require('./app/routes.js')(app); // use "/" from own /app/routes.js
 require('basic-login-bar')(app,session,passport);
 
 
-app.listen(port);
+http.listen(port);
 console.log('The magic happens on port ' + port);

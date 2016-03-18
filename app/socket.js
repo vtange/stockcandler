@@ -11,9 +11,9 @@ module.exports = function(io) {
 	  });
 
 	  //DEFINED INSIDE INDEX.HTML
-	  socket.on('chat message', function(msg){
+	  socket.on('echo', function(msg){
 		console.log('message: ' + msg);
-		io.emit('chat message', msg);
+		//io.emit('chat message', msg);
 	  });
 
 	});
