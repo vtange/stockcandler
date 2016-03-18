@@ -126,7 +126,7 @@ module.exports = function(app) {
 						}));
 				}
 				else{
-					res.send(400,{status:"error", message: 'Invalid Ticker.'});
+					res.status(400).send({status:"error", message: 'Invalid Ticker.'});
 				}
 			});
 		};

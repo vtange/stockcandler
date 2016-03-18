@@ -6,15 +6,53 @@
 app.config(function ($socketProvider) {
     $socketProvider.setConnectionUrl('http://localhost:8080');
 });
+app.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+}]);
+//fix $http .error not proccing due to intercepter issue
+app.config(function ($httpProvider) {
+	$httpProvider.interceptors.push(function ($q, $rootScope) {
+
+        return {
+            request: function (config) {
+                //the same config / modified config / a new config needs to be returned.
+                return config;
+            },
+            requestError: function (rejection) {
+                return $q.reject(rejection);
+            },
+            response: function (response) {
+                //the same response/modified/or a new one need to be returned.
+                return response;
+            },
+            responseError: function (rejection) {
+                return $q.reject(rejection);
+            }
+        };
+    });
+});
 	
 app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scope, $http, $window, $socket){
 	//search stocks form
 	$scope.input = {};
-
+	
+	//when no found stock
+	$scope.placeholderTxt = "Search for a Stock";
+	
 	//search returned stocks
 	$scope.found = null;
 	
-	//ng-style for #stock-info
+	//ng-style for #stock-info if something was not found
+	$scope.placeholder = function(){
+		if(!$scope.found){
+			return { "display":"static", "opacity":1 }
+		}
+		else{
+			return { "display":"none", "opacity":0 }
+		}
+	}
+	
+	//ng-style for #stock-finder if something was found
 	$scope.stockPopup = function(){
 		if($scope.found){
 			return { "display":"static", "opacity":1 }
@@ -51,6 +89,8 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 	$scope.searchTicker = function(ticker){
 		$http.post($window.location.href+"search",$scope.input).success(function(data){
 			$scope.found = processData(data);
+		}).error(function(data){
+			$scope.placeholderTxt = data.message;
 		});
 	};
 
@@ -76,14 +116,12 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 	//add stock to user's list
 	$scope.userAddStock = function(){
 		var info = {user:$scope.activeUser,ticker:$scope.found.ticker};
-		$http.post($window.location.href+"addstock",info).success(function(data){
+		$http.post($window.location.href+"addstock",info).then(function(data){
 			$scope.activeUser.stocks.push(data);
 			$scope.activeUser.detailedStocks.push($scope.found);
 
 			$socket.emit('echo', $scope.found.ticker);
 			$scope.found = null;
-		}).error(function(data){
-			console.log(data);
 		});
 	}
 	
