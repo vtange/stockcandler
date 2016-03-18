@@ -81,6 +81,7 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 		}
 		return txt;
 	}
+	//replace strings in obj with processed string
 	function processData(obj){
 		for (var prop in obj){
 			obj[prop] = processText(obj[prop]);
@@ -149,6 +150,7 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 			return false;
 		}
 	}
+	//check array for string
 	function stockScan(arr, ticker){
 		return arr.every(function(obj){
 			return obj.ticker !== ticker;
@@ -178,6 +180,7 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 				return{"background-color":"orangered", "height": heightSetting, "transform":"translate(-50%,-"+topSetting+")" }
 		}
 	}
+	//used if you want more than one candle
 	$scope.candleMakerThin = function(stockInfo){
 	}
 	function getRange(low,high){
