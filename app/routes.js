@@ -71,59 +71,63 @@ module.exports = function(app) {
 			deferred.promise.then(function (value) {
 
 				var temp = value.split(",");
-				
-				//if no stock, make one
-				if(!STOCK){
-					STOCK            = new StockHist();
-					//if no stock, all data goes to today and not yesterday
-					STOCK.name = temp[7];
-					STOCK.ticker = SYMBOL;
-					STOCK.today.percent = temp[0];
-					STOCK.today.open = temp[1];
-					STOCK.today.low = temp[2];
-					STOCK.today.high = temp[3];
-					STOCK.today.ask = temp[4];
-					STOCK.today.volume = temp[5];
-					STOCK.today.avgvolume = temp[6];
-					STOCK.lastUpdated = getDate();
+				if(temp[0]!=="N/A"){
+					//if no stock, make one
+					if(!STOCK){
+						STOCK            = new StockHist();
+						//if no stock, all data goes to today and not yesterday
+						STOCK.name = temp[7];
+						STOCK.ticker = SYMBOL;
+						STOCK.today.percent = temp[0];
+						STOCK.today.open = temp[1];
+						STOCK.today.low = temp[2];
+						STOCK.today.high = temp[3];
+						STOCK.today.ask = temp[4];
+						STOCK.today.volume = temp[5];
+						STOCK.today.avgvolume = temp[6];
+						STOCK.lastUpdated = getDate();
+					}
+					else{
+						//push all old data to yesterday. update lastUpdated.
+						STOCK.yesterday.percent = STOCK.today.percent;
+						STOCK.yesterday.open = STOCK.today.open;
+						STOCK.yesterday.low = STOCK.today.low;
+						STOCK.yesterday.high = STOCK.today.high;
+						STOCK.yesterday.ask = STOCK.today.ask;
+						STOCK.yesterday.volume = STOCK.today.volume;
+						STOCK.yesterday.avgvolume = STOCK.today.avgvolume;
+						STOCK.today.percent = temp[0];
+						STOCK.today.open = temp[1];
+						STOCK.today.low = temp[2];
+						STOCK.today.high = temp[3];
+						STOCK.today.ask = temp[4];
+						STOCK.today.volume = temp[5];
+						STOCK.today.avgvolume = temp[6];
+						STOCK.lastUpdated = getDate();
+					}
+						//save the STOCK
+					STOCK.save(function(err){
+						if(err)
+							throw err;
+						console.log('updated ' + STOCK.ticker);
+					})
+
+					// send the info
+						res.send(JSON.stringify({
+							ticker: SYMBOL,
+							percent: temp[0],
+							open: temp[1],
+							low: temp[2],
+							high: temp[3],
+							ask: temp[4],
+							volume: temp[5],
+							avgvolume: temp[6],
+							name: temp[7],
+						}));
 				}
 				else{
-					//push all old data to yesterday. update lastUpdated.
-					STOCK.yesterday.percent = STOCK.today.percent;
-					STOCK.yesterday.open = STOCK.today.open;
-					STOCK.yesterday.low = STOCK.today.low;
-					STOCK.yesterday.high = STOCK.today.high;
-					STOCK.yesterday.ask = STOCK.today.ask;
-					STOCK.yesterday.volume = STOCK.today.volume;
-					STOCK.yesterday.avgvolume = STOCK.today.avgvolume;
-					STOCK.today.percent = temp[0];
-					STOCK.today.open = temp[1];
-					STOCK.today.low = temp[2];
-					STOCK.today.high = temp[3];
-					STOCK.today.ask = temp[4];
-					STOCK.today.volume = temp[5];
-					STOCK.today.avgvolume = temp[6];
-					STOCK.lastUpdated = getDate();
+					res.send(400,{status:"error", message: 'Invalid Ticker.'});
 				}
-					//save the STOCK
-				STOCK.save(function(err){
-					if(err)
-						throw err;
-					console.log('updated ' + STOCK.ticker);
-				})
-				
-				// send the info
-					res.send(JSON.stringify({
-						ticker: SYMBOL,
-						percent: temp[0],
-						open: temp[1],
-						low: temp[2],
-						high: temp[3],
-						ask: temp[4],
-						volume: temp[5],
-						avgvolume: temp[6],
-						name: temp[7],
-					}));
 			});
 		};
 		

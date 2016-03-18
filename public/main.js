@@ -79,9 +79,11 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 		$http.post($window.location.href+"addstock",info).success(function(data){
 			$scope.activeUser.stocks.push(data);
 			$scope.activeUser.detailedStocks.push($scope.found);
-			
+
 			$socket.emit('echo', $scope.found.ticker);
 			$scope.found = null;
+		}).error(function(data){
+			console.log(data);
 		});
 	}
 	
@@ -158,8 +160,8 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 	}
 
 	//socket stuff here
-	$socket.on('echo', function (data) {
-		$scope.serverResponse = data;
+	$socket.on('stock', function (data) {
+		console.log(data);
 	});
 
 }]);//end of controller
