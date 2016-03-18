@@ -37,6 +37,9 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 	$scope.input = {};
 	
 	//when no found stock
+	$scope.recentStocksList = [];
+	
+	//when no found stock
 	$scope.placeholderTxt = "Search for a Stock";
 	
 	//search returned stocks
@@ -199,7 +202,7 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 
 	//socket stuff here
 	$socket.on('stock', function (data) {
-		console.log(data);
+		$scope.recentStocksList.push(data)
 	});
 
 }]);//end of controller

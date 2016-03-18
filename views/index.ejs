@@ -11,9 +11,9 @@
 	<script src="angular-socket.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </head>
-<body>
+<body data-ng-app="Candler" data-ng-controller="MainCtrl as main" >
 <%- include ../node_modules/basic-login-bar/views/partials/header.ejs %>
-<div class="container">
+
     <% if (!user) { %>
 
 		<div id="intro" class="vert-centered">
@@ -23,8 +23,9 @@
 		</div>
 	
     <% } else {%>
-
-	<div id="body" data-ng-app="Candler" data-ng-controller="MainCtrl as main" data-ng-init="package = <%= packagedUser %>;init(package)">
+<div id="recent-stocks">Recent Stocks:<span data-ng-repeat="ticker in recentStocksList">{{ticker}}</span></div>
+	<div class="container">
+	<div id="body" data-ng-init="package = <%= packagedUser %>;init(package)">
 		<div id="user-candle-list">
 		<h1 style="text-align:center;">Your Candles</h1>
 			<div id="user-stock-gallery">
