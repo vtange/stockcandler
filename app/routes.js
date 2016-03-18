@@ -180,6 +180,10 @@ module.exports = function(app) {
 									throw err;
 								console.log("user has new stock");
 								//tracks last adds
+								if(app.recentAdded.length>20){
+									//if long list, trim b4 adding
+									app.recentAdded.splice(0,1);
+								}
 								app.recentAdded.push(req.body.ticker);
 							});
 						//send info for angular to update the user's list and grey out add button.
