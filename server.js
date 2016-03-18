@@ -5,6 +5,11 @@ var express  = require('express');
 var app      = express();
 var port     = process.env.PORT || 8080;
 
+// socket.io setup
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+require('./app/socket.js')(io);
+
 // DB and Passport configuration ===============================================================
 var mongoose = require('mongoose');
 var configDB = require('./config/database.js');
