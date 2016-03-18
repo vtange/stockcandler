@@ -93,6 +93,7 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 		$http.post($window.location.href+"search",$scope.input).success(function(data){
 			$scope.found = processData(data);
 		}).error(function(data){
+			$scope.found = null;
 			$scope.placeholderTxt = data.message;
 		});
 	};

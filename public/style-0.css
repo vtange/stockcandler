@@ -156,7 +156,7 @@ a.boxclose{
 	border-left: 1px solid #ddd;
 	border-top: 1px solid #ddd;
 }
-#user-stock-gallery > .stock-info-tall:last-child, .stock-info-tall:nth-child(4){
+#user-stock-gallery > .stock-info-tall:last-child, .stock-info-tall:nth-child(4n), #stock-finder > .stock-info-tall{
 	/*for gallery */
 	border-right: 1px solid #ddd;
 }
