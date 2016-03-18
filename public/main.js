@@ -116,11 +116,11 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 	//add stock to user's list
 	$scope.userAddStock = function(){
 		var info = {user:$scope.activeUser,ticker:$scope.found.ticker};
-		$http.post($window.location.href+"addstock",info).then(function(data){
+		$http.post($window.location.href+"addstock",info).success(function(data){
 			$scope.activeUser.stocks.push(data);
 			$scope.activeUser.detailedStocks.push($scope.found);
 
-			$socket.emit('echo', $scope.found.ticker);
+			$socket.emit('stock', $scope.found.ticker);
 			$scope.found = null;
 		});
 	}
