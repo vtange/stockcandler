@@ -15,14 +15,18 @@ var request = require('request');
 
 // app/routes.js
 module.exports = function(app) {
-
+	
+	//init app.recentAdded
+	if(!app.recentAdded){
+		app.recentAdded = [];
+	}
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
 		res.render('index.ejs', {
 			user : req.user, // get the user out of session and pass to template
-			packagedUser : JSON.stringify([req.user])
+			packagedUser : JSON.stringify([req.user,app.recentAdded])
 		}); // load the index.ejs file
     });
 	
@@ -59,15 +63,14 @@ module.exports = function(app) {
 			m: Day’s Range
 			m2: Day’s Range (Realtime)
 		*/
-		var ticker = req.body.ticker.toUpperCase();;
-
+		var ticker = req.body.ticker.toUpperCase();
 		//perform HTTP action
 		function searchByTicker(SYMBOL, STOCK){
 			var url = "http://finance.yahoo.com/d/quotes.csv?s="+SYMBOL+"&f=p2oghava2n"
 			var deferred = Q.defer();
 			request.get(url, function (error, result) {
 				deferred.resolve(result.body);
-			})
+			});
 			deferred.promise.then(function (value) {
 
 				var temp = value.split(",");
@@ -110,7 +113,7 @@ module.exports = function(app) {
 						if(err)
 							throw err;
 						console.log('updated ' + STOCK.ticker);
-					})
+					});
 
 					// send the info
 						res.send(JSON.stringify({
@@ -176,6 +179,8 @@ module.exports = function(app) {
 								if (err)
 									throw err;
 								console.log("user has new stock");
+								//tracks last adds
+								app.recentAdded.push(req.body.ticker);
 							});
 						//send info for angular to update the user's list and grey out add button.
 							res.send(JSON.stringify({ticker:req.body.ticker}));

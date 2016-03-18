@@ -106,6 +106,7 @@ app.controller('MainCtrl', ['$scope','$http','$window','$socket', function($scop
 	//used to transfer server data to client
 	$scope.init = function(package) {
 		$scope.activeUser = package[0];
+		$scope.recentStocksList = package[1];
 		$scope.activeUser.detailedStocks = [];
 		if($scope.activeUser){
 			$scope.activeUser.stocks.forEach(function(stockObj){
