@@ -1,5 +1,6 @@
 {
   "name": "stockcandler",
+  "title": "StockCandler",
   "version": "1.0.0",
   "description": "Stock Candles and other metrics by the half-day",
   "scripts": {

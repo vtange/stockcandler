@@ -15,12 +15,16 @@ var mongoose = require('mongoose');
 var configDB = require('./config/database.js');
 mongoose.connect(configDB.url); // connect to our database
 
+// get project information
+var package = require('./package.json');
+app.title = package.title;
+
 var flash    = require('connect-flash');
 var session  = require('express-session');
 var passport = require('passport');
 require('./config/passport')(passport); // pass passport for configuration
 
-//general express stuff
+// general express stuff
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
