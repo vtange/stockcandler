@@ -1,4 +1,4 @@
-console.log("	APP/ROUTES.JS")
+console.log("	APP/ROUTES.JS");
 
 //for mongoDB interaction routes
 var User = require('./models/user');
@@ -7,7 +7,7 @@ var StockHist = require('./models/stock');
 //for date comparison / stock memory
 function getDate(){
 	return new Date().toString().slice(0,15);
-}
+};
 
 //for doing HTTP requests
 var Q = require('q');
