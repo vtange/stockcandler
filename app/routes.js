@@ -27,7 +27,7 @@ module.exports = function(app) {
 		res.render('index.ejs', {
 			title : app.title,
 			user : req.user, // get the user out of session and pass to template
-			packagedUser : JSON.stringify([req.user,app.recentAdded])
+			packagedUser : JSON.stringify([req.user,app.recentAdded]) // send user data and recent stocks data to client
 		}); // load the index.ejs file
     });
 	
